@@ -6,25 +6,30 @@ class Bot {
     private currentMove: number;
     constructor() {
         this.dynamiteRemaining = 100;
-        this.currentMove = 0;
+        this.currentMove = -1;
     }
     makeMove(gamestate: Gamestate): BotSelection {
         this.currentMove += 1;
-        if (this.currentMove <=3) {
-            return this.openingMoves()
-        } else if (this.currentMove == 2500) {
-            this.dynamiteRemaining -= 1;
-            return 'D'
-        } else{
-            return this.drawingMoves(gamestate);
+        if (this.currentMove <=4) {
+            return this.makeDynamite();
+        } else if (this.currentMove == 2499) {
+            return this.makeDynamite();
+        }
+        let firstRepeat = this.compareOpponentsMoves(this.currentMove-1,this.currentMove-2,gamestate);
+        let secondRepeat = this.compareOpponentsMoves(this.currentMove-2,this.currentMove-3,gamestate);
+
+        if (firstRepeat && secondRepeat) {
+            return gamestate.rounds[this.currentMove-1].p2
         }
     }
-    private openingMoves(): BotSelection {
+    private makeDynamite(): BotSelection {
         this.dynamiteRemaining -= 1;
         return 'D'
     }
-    private drawingMoves(gamestate: Gamestate): BotSelection{
-        return gamestate.rounds[1].p2
+
+    compareOpponentsMoves(i: number,j: number,gamestate: Gamestate): Boolean {
+        return gamestate.rounds[i].p2 == gamestate.rounds[j].p2;
+
     }
 }
 
