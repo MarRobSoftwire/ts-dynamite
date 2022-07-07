@@ -1,9 +1,19 @@
 import { Gamestate, BotSelection } from '../models/gamestate';
 
 class Bot {
+    private dynamiteRemaining: Number;
+    constructor() {
+        this.dynamiteRemaining = 100;
+    }
     makeMove(gamestate: Gamestate): BotSelection {
-        const randomiser = Math.floor(Math.random()*4.25);
-        switch(randomiser) {
+        let randomNumber = 0;
+        if(this.dynamiteRemaining>0) {
+            randomNumber = Math.floor(Math.random()*4.1);
+        } else {
+            randomNumber = Math.floor(Math.random()*4);
+        }
+        
+        switch(randomNumber) {
             case 0: {
                 return 'R';
             }
@@ -17,9 +27,9 @@ class Bot {
                 return 'W';
             }
             default: {
+                this.dynamiteRemaining=- 1;
                 return 'D';
             }
-
         }
     }
 }
