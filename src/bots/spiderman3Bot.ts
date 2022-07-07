@@ -24,7 +24,7 @@ class Bot {
         return 'D'
     }
     private drawingMoves(gamestate: Gamestate): BotSelection{
-        return 'W'
+        return gamestate.rounds[1].p2
     }
 }
 
