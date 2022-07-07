@@ -27,7 +27,7 @@ class Bot {
         return 'D'
     }
 
-    compareOpponentsMoves(i: number,j: number,gamestate: Gamestate): Boolean {
+    private compareOpponentsMoves(i: number,j: number,gamestate: Gamestate): Boolean {
         return gamestate.rounds[i].p2 == gamestate.rounds[j].p2;
 
     }
